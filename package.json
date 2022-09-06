@@ -2,7 +2,7 @@
   "name": "its",
   "private": true,
   "engines": {
-    "node": "14.x"
+    "node": "14.18.2"
   },
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
