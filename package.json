@@ -1,7 +1,7 @@
 {
   "name": "its",
   "engines": {
-    "node": "14.18.2"
+    "node": "14.x"
   },
   "private": true,
   "dependencies": {
