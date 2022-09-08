@@ -1,0 +1,27 @@
+<input id="task-id" name="task-id" type="hidden" value="<%=@new_task.id%>">
+<input id="save-task" name="save-task" type="hidden" value="<%= save_task_url %>">
+<div class="controls">
+  <p>
+    <button id="addBar">Agregar Barra</button>
+    <label for="fname">Nombre Ejercicio</label>
+    <input type="text" id="fname" name="fname" value="Ingrese el nombre del ejercicio">
+  </p>
+  <p>
+    <button id="open-vector-modal">Agregar Flecha</button>
+  </p>
+  <p>
+    <button id="addText">Agregar Texto</button>
+  </p>
+  <p>
+    <button id="addApoyoFijo">Agregar Apoyo Fijo</button>
+  </p>
+  <p>
+    <button id="addApoyoDes">Agregar Apoyo Deslizante</button>
+  </p>
+  <p>
+    <button id="addEmpotramiento">Agregar Empotramiento</button>
+    <button id="guardar">Guardar</button>
+  </p>
+</div>
+<canvas id="canvas"></canvas>
+

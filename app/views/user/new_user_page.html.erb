@@ -1,0 +1,23 @@
+<div class="new_user">
+
+  <%= form_with url: new_user_url, method: :post do |form| %>
+    <div class="mb-3">
+      <%= form.label :email, "Email address" %>
+      <%= form.text_field :email, class:"form-control", type:"email", id: "exampleInputEmail1"%>
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <%= form.label :name, "Professor name" %>
+      <%= form.text_field :name, class:"form-control"%>
+    </div>
+    <div class="mb-3">
+      <%= form.label :phone_number, "Phone number" %>
+      <%= form.text_field :phone_number, class:"form-control"%>
+    </div>
+    <div class="mb-3">
+      <%= form.label :password, "Password", class:"form-label", for:"exampleInputPassword1"%>
+      <%= form.text_field :password, class:"form-control", id:"exampleInputPassword1" %>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  <%end %>
+</div>

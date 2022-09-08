@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+professor = Professor.create(email: "mibustos2@miuandes.cl", name: "Matías")
+task = Task.create(professor_id: professor.id, name: "First Task", category: "")

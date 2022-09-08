@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  professor: one
+  canvas_stringify: MyString
+  category: MyString
+
+two:
+  professor: two
+  canvas_stringify: MyString
+  category: MyString

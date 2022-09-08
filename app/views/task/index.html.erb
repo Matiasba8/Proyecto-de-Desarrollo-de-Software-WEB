@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Nombre Tarea</th>
+    <th scope="col">Profesor</th>
+    <th scope="col">Dificultad</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |t| %>
+      <tr>
+        <td>
+          <a href="/task/<%=t.id %>/edit"><%=t.id %></a>
+        </td>
+        <td>
+          <%= t.name %>
+        </td>
+        <td>
+          <%= t.professor.name %>
+        </td>
+        <td>
+          <%= t.category %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

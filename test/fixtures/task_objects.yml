@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task: one
+  type: 
+  force: 1.5
+  angle: 1.5
+  scaleX: 1.5
+  scaleY: 1.5
+  top: 1.5
+  let: 1.5
+
+two:
+  task: two
+  type: 
+  force: 1.5
+  angle: 1.5
+  scaleX: 1.5
+  scaleY: 1.5
+  top: 1.5
+  let: 1.5

@@ -1,15 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Its</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Its</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <!--Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-  <body>
-    <%= yield %>
-  </body>
+  <!--Application stylesheets-->
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom <%= $is_home_page? "fixed-top": "" %>">
+  <div class="container px-5">
+    <%= link_to "Pog ITS Estatica", root_url, class:"navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <%= link_to "Crear cuenta", user_new_url, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Iniciar sesión", root_url, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Nueva Tarea", task_new_path, class:"nav-link", id: "new-task-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Index de Tarea", task_index_path, class:"nav-link" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<%= yield %>
+</body>
 </html>
