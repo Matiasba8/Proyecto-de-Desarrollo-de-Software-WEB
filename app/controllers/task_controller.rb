@@ -31,6 +31,16 @@ class TaskController < ApplicationController
 
   end
 
+  def load2
+    @task = Task.find(params[:id])
+    @objects = @task.task_objects
+
+    respond_to do |format|
+      format.json { render json: @objects.to_json}
+      format.html
+    end
+  end
+
   def edit
     @task = Task.where(id: params[:id])[0]
   end
@@ -49,4 +59,6 @@ class TaskController < ApplicationController
       format.html
     end
   end
+
+
 end

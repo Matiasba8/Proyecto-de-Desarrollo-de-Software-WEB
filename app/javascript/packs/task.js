@@ -7,7 +7,6 @@ var ids_to_delete = [];
 var objects = [];
 
 var data_to_send = []
-
 // Elimina un objecto por su id a objects
 function removeObjectFromObjects(id){
     objects.some(function(object){
@@ -17,6 +16,10 @@ function removeObjectFromObjects(id){
         }
     })
 }
+
+// -***- Render Objects -***-
+
+
 
 function AddRectangle(canvas) {
 
@@ -389,7 +392,6 @@ var onObjectModified = function(e) {
 };
 //Object Removed Event
 var onObjectRemoved = function (e){
-    console.log(e)
 };
 
 
@@ -407,6 +409,24 @@ function common_events(){
         data: {id: $('#task-id').val()},
         success: function (data) {
             console.log(`data: ${data}`)
+            /*canvas.loadFromJSON(data, function(){
+                canvas.renderAll();
+                canvas.forEachObject(function(object){
+                    if (object.type === "line"){
+                        object.selectable = false
+                    }
+                });
+            });*/
+        }
+    });
+
+    //Load canvas from server
+    $.ajax({
+        type: "POST",
+        url: "/load2",
+        dataType: 'json',
+        data: {id: $('#task-id').val()},
+        success: function (data) {
             canvas.loadFromJSON(data, function(){
                 canvas.renderAll();
                 canvas.forEachObject(function(object){

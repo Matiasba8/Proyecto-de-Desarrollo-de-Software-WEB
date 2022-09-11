@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   post "load_canvas", to: "task#load_canvas"
 
   post "save2", to: "task#save2"
+  post "load2", to: "task#load2"
 end
