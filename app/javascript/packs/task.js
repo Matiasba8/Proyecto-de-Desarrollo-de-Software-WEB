@@ -19,6 +19,107 @@ function removeObjectFromObjects(id){
 
 // -***- Render Objects -***-
 
+function renderApoyoFijo(canvas, id, scaleX, scaleY, top, left, angle ){
+
+    fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
+        img.set({
+            "id": id,
+            scaleX: scaleX,
+            scaleY: scaleY,
+            top: top,
+            left: left,
+            angle: angle,
+        });
+        img.scaleToWidth(30);
+        img.scaleToHeight(30);
+        canvas.add(img)
+    });
+
+    objects.push({
+        "id": id,
+        "width": 0,
+        "height": 0,
+        "canvas_type": "image",
+        "object_type": "apoyo-fijo",
+        "force": 0,
+        "angle": 0,
+        "scaleX": scaleX,
+        "scaleY": scaleY,
+        "top": top,
+        "left": left
+    })
+}
+
+
+function renderApoyoDes(canvas, id, scaleX, scaleY, top, left, angle ){
+
+    fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
+        img.set({
+            "id": id_counter,
+            scaleX: 1/4,
+            scaleY: 1/4,
+            top: 100,
+            left: 50,
+            angle: 0,
+        });
+        img.scaleToWidth(30);
+        img.scaleToHeight(30);
+        canvas.add(img)
+    });
+
+    objects.push({
+        "id": id_counter,
+        "width": 0,
+        "height": 0,
+        "canvas_type": "image",
+        "object_type": "apoyo-deslizante",
+        "force": 0,
+        "angle": 0,
+        "scaleX": 1/4,
+        "scaleY": 1/4,
+        "top": 100,
+        "left": 50
+    })
+}
+
+function renderEmpotramiento(canvas, id, scaleX, scaleY, top, left, angle ){
+
+    fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
+        img.set({
+            "id": id,
+            scaleX: scaleX,
+            scaleY: scaleY,
+            top: top,
+            left: left,
+            angle: angle,
+        });
+        img.scaleToWidth(30);
+        img.scaleToHeight(30);
+        canvas.add(img)
+    });
+
+    objects.push({
+        "id": id_counter,
+        "width": 0,
+        "height": 0,
+        "canvas_type": "image",
+        "object_type": "empotramiento",
+        "force": 0,
+        "angle": angle,
+        "scaleX": scaleX,
+        "scaleY": scaleY,
+        "top": top,
+        "left": left
+    })
+}
+
+
+
+
+
+
+
+// -***-----------------------------------***-----
 
 
 function AddRectangle(canvas) {
@@ -199,104 +300,18 @@ function attachButtonsEvents(canvas){
     });
 
     $('#addApoyoFijo').on('click', function(){
-
         id_counter += 1
-
-        fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
-            img.set({
-                "id": id_counter,
-                scaleX: 1/4,
-                scaleY: 1/4,
-                top: 100,
-                left: 50,
-                angle: 0,
-            });
-            img.scaleToWidth(30);
-            img.scaleToHeight(30);
-            canvas.add(img)
-        });
-
-        objects.push({
-            "id": id_counter,
-            "width": 0,
-            "height": 0,
-            "canvas_type": "image",
-            "object_type": "apoyo-fijo",
-            "force": 0,
-            "angle": 0,
-            "scaleX": 1/4,
-            "scaleY": 1/4,
-            "top": 100,
-            "left": 50
-        })
+        renderApoyoFijo(canvas,id_counter, 1/4, 1/4, 100, 50, 0)
     });
 
     $('#addApoyoDes').on('click', function(){
-
         id_counter += 1
-
-        fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
-            img.set({
-                "id": id_counter,
-                scaleX: 1/4,
-                scaleY: 1/4,
-                top: 100,
-                left: 50,
-                angle: 0,
-            });
-            img.scaleToWidth(30);
-            img.scaleToHeight(30);
-            canvas.add(img)
-        });
-
-        objects.push({
-            "id": id_counter,
-            "width": 0,
-            "height": 0,
-            "canvas_type": "image",
-            "object_type": "apoyo-deslizante",
-            "force": 0,
-            "angle": 0,
-            "scaleX": 1/4,
-            "scaleY": 1/4,
-            "top": 100,
-            "left": 50
-        })
-
+        renderApoyoDes(canvas,id_counter, 1/4, 1/4, 100, 50, 0)
     });
 
     $('#addEmpotramiento').on('click', function(){
-
         id_counter += 1
-
-        fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
-            img.set({
-                "id": id_counter,
-                scaleX: 1/4,
-                scaleY: 1/4,
-                top: 100,
-                left: 50,
-                angle: 0,
-             });
-            img.scaleToWidth(30);
-            img.scaleToHeight(30);
-            canvas.add(img)
-        });
-
-        objects.push({
-            "id": id_counter,
-            "canvas_type": "image",
-            "width": 0,
-            "height": 0,
-            "object_type": "empotramiento",
-            "force": 0,
-            "angle": 0,
-            "scaleX": 1/4,
-            "scaleY": 1/4,
-            "top": 100,
-            "left": 50
-        })
-
+        renderEmpotramiento(canvas, id_counter, 1/4, 1/4, 100, 50, 0)
     });
 
     $('#guardar').on('click', function(){
