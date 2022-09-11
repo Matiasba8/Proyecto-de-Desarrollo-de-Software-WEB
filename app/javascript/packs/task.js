@@ -21,40 +21,105 @@ function removeObjectFromObjects(id){
 
 
 
-function AddRectangle(canvas) {
+function AddRectangle(canvas, left, top, width, height, angle, scaleX, scaleY) {
 
     id_counter += 1
 
     var rect = new fabric.Rect({
         id: id_counter,
-        left: 90,
-        top: 60,
+        left: left,//90,
+        top: top,//60,
         fill: '#999999',
-        width: 180,
-        height: 30,
+        width: width,//180,
+        height: height,//30,
         objectCaching: false,
         stroke: 'black',
         strokeWidth: 0,
+        angle: angle,
+        scaleX: scaleX,
+        scaleY: scaleY
     });
 
     objects.push({
         "id": id_counter,
-        "width": 180,
-        "height": 30,
+        "width": width,
+        "height": height,
         "canvas_type": "rect",
         "object_type": "bar",
         "force": 0,
-        "angle": 0,
-        "scaleX": 0, //Cambiar al valor default
-        "scaleY": 0,
-        "top": 100,
-        "left": 50
+        "angle": angle,
+        "scaleX": scaleX, //Cambiar al valor default
+        "scaleY": ScaleY,
+        "top": top,//100,
+        "left": left//50
     })
 
     canvas.add(rect);
     canvas.setActiveObject(rect);
     return rect;
 }
+
+function AddText(left, top, width, height, angle, scaleX, scaleY) {
+    id_counter += 1
+
+    canvas.add(new fabric.IText('Tap and Type', {
+        id: id_counter,
+        fontFamily: 'arial black',
+        left: left,//50,
+        top: top,//100 ,
+        width: width,
+        height: height,
+        angle: angle,
+        scaleX: scaleX,
+        scaleY: scaleY,
+    }));
+    objects.push({
+        "id": id_counter,
+        "width": width,
+        "height": height,
+        "canvas_type": "i-text",
+        "object_type": "text",
+        "force": 0,
+        "angle": angle,
+        "scaleX": scaleX, //Cambiar al valor default
+        "scaleY": scaleY,
+        "top": top,
+        "left": left
+    })
+}
+
+function AddVector(left, top, width, height, angle, scaleX, scaleY, force) {
+    id_counter += 1
+
+    fabric.Image.fromURL('https://cdn-icons-png.flaticon.com/512/664/664866.png', (img) => {
+        img.set({
+            id: id_counter,
+            scaleX: scaleX,//1/4,
+            scaleY: scaleY,//1/4,
+            top: top,//100,
+            left: left,//50,
+            
+        });
+        img.rotate(angle)
+        canvas.add(img)
+
+        console.log(`Img_id: ${img.id}`)
+    });
+    objects.push({
+        "id": id_counter,
+        "width": width,
+        "height": height,
+        "canvas_type": "image",
+        "object_type": "vector",
+        "force": force,
+        "angle": angle,
+        "scaleX": scaleX,
+        "scaleY": scaleY,
+        "top": top,
+        "left": left
+    })
+}
+
 
 function canvasGridSetUp(canvas){
     var grid = 30;
@@ -166,32 +231,11 @@ function canvasGridSetUp(canvas){
 
 function attachButtonsEvents(canvas){
     $('#addBar').on('click', function(){
-        AddRectangle(canvas);
+        AddRectangle(canvas, 90, 60, 180, 30, 0, 0, 0);
     });
 
     $('#addText').on('click', function(){
-
-        id_counter += 1
-
-        canvas.add(new fabric.IText('Tap and Type', {
-            id: id_counter,
-            fontFamily: 'arial black',
-            left: 50,
-            top: 100 ,
-        }));
-        objects.push({
-            "id": id_counter,
-            "width": 0,
-            "height": 0,
-            "canvas_type": "i-text",
-            "object_type": "text",
-            "force": 0,
-            "angle": 0,
-            "scaleX": 0, //Cambiar al valor default
-            "scaleY": 0,
-            "top": 100,
-            "left": 50
-        })
+        AddText(50, 100, 0, 0, 0, 0, 0);
     });
 
     $('#open-vector-modal').on('click', function(){
