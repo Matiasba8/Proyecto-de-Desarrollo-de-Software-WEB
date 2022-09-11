@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   post "new_user", to: "user#new"
   post "save_task", to: "task#save_task"
   post "load_canvas", to: "task#load_canvas"
+
+  post "save2", to: "task#save2"
 end

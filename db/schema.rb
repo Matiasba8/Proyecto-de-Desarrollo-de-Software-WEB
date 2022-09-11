@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_08_230357) do
+ActiveRecord::Schema.define(version: 2022_09_11_183939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,15 +26,18 @@ ActiveRecord::Schema.define(version: 2022_09_08_230357) do
 
   create_table "task_objects", force: :cascade do |t|
     t.bigint "task_id", null: false
-    t.string "type"
+    t.string "object_type"
     t.float "force"
     t.float "angle"
     t.float "scaleX"
     t.float "scaleY"
     t.float "top"
-    t.float "let"
+    t.float "left"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "canvas_type"
+    t.float "width"
+    t.float "height"
     t.index ["task_id"], name: "index_task_objects_on_task_id"
   end
 

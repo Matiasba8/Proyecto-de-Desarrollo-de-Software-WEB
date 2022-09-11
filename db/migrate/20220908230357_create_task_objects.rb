@@ -8,7 +8,7 @@ class CreateTaskObjects < ActiveRecord::Migration[6.0]
       t.float :scaleX
       t.float :scaleY
       t.float :top
-      t.float :let
+      t.float :left
 
       t.timestamps
     end
