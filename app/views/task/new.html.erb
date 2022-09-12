@@ -7,7 +7,7 @@
     <input type="text" id="fname" name="fname" value="Ingrese el nombre del ejercicio">
   </p>
   <p>
-    <button id="open-vector-modal">Agregar Flecha</button>
+    <button id="open-vector-modal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar Flecha</button>
   </p>
   <p>
     <button id="addText">Agregar Texto</button>
@@ -25,3 +25,31 @@
 </div>
 <canvas id="canvas"></canvas>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos del vector</h5>
+        <button type="button" class="close close-vector-modal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <label for="vector-force"> Fuerza del vector</label>
+          <input type="text" id="vector-force">
+        </p>
+        <p>
+          <label for="vector-force"> Angulo del vector</label>
+          <input type="text" id="vector-angle">
+        </p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-vector-modal" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="create-vector">Crear</button>
+      </div>
+    </div>
+  </div>
+</div>
