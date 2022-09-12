@@ -19,11 +19,13 @@ function removeObjectFromObjects(id){
 
 // -***- Render Objects -***-
 
-function renderApoyoFijo(canvas, id, scaleX, scaleY, top, left, angle ){
+function renderApoyoFijo(canvas, scaleX, scaleY, top, left, angle ){
+    console.log("FIJO")
+    console.log(`id_counter: ${id_counter}`)
 
     fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
         img.set({
-            "id": id,
+            id: id_counter,
             scaleX: scaleX,
             scaleY: scaleY,
             top: top,
@@ -36,7 +38,7 @@ function renderApoyoFijo(canvas, id, scaleX, scaleY, top, left, angle ){
     });
 
     objects.push({
-        "id": id,
+        "id": id_counter,
         "width": 0,
         "height": 0,
         "canvas_type": "image",
@@ -51,16 +53,17 @@ function renderApoyoFijo(canvas, id, scaleX, scaleY, top, left, angle ){
 }
 
 
-function renderApoyoDes(canvas, id, scaleX, scaleY, top, left, angle ){
-
+function renderApoyoDes(canvas, scaleX, scaleY, top, left, angle ){
+    console.log("DES")
+    console.log(`id_counter: ${id_counter}`)
     fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
         img.set({
-            "id": id_counter,
-            scaleX: 1/4,
-            scaleY: 1/4,
-            top: 100,
-            left: 50,
-            angle: 0,
+            id: id_counter,
+            scaleX: scaleX,
+            scaleY: scaleY,
+            top: top,
+            left: left,
+            angle: angle,
         });
         img.scaleToWidth(30);
         img.scaleToHeight(30);
@@ -74,19 +77,20 @@ function renderApoyoDes(canvas, id, scaleX, scaleY, top, left, angle ){
         "canvas_type": "image",
         "object_type": "apoyo-deslizante",
         "force": 0,
-        "angle": 0,
-        "scaleX": 1/4,
-        "scaleY": 1/4,
-        "top": 100,
-        "left": 50
+        "angle": angle,
+        "scaleX": scaleX,
+        "scaleY": scaleY,
+        "top": top,
+        "left": left
     })
 }
 
-function renderEmpotramiento(canvas, id, scaleX, scaleY, top, left, angle ){
-
+function renderEmpotramiento(canvas, scaleX, scaleY, top, left, angle ){
+    console.log("EMPOTRA")
+    console.log(`id_counter: ${id_counter}`)
     fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
         img.set({
-            "id": id,
+            id: id_counter,
             scaleX: scaleX,
             scaleY: scaleY,
             top: top,
@@ -117,15 +121,12 @@ function renderEmpotramiento(canvas, id, scaleX, scaleY, top, left, angle ){
 
 
 
-
-
 // -***-----------------------------------***-----
 
 
-function AddRectangle(canvas, left, top, width, height, angle, scaleX, scaleY) {
-
-    id_counter += 1
-
+function renderRectangle(canvas, left, top, width, height, angle, scaleX, scaleY) {
+    console.log("RECTR")
+    console.log(`id_counter: ${id_counter}`)
     var rect = new fabric.Rect({
         id: id_counter,
         left: left,//90,
@@ -150,7 +151,7 @@ function AddRectangle(canvas, left, top, width, height, angle, scaleX, scaleY) {
         "force": 0,
         "angle": angle,
         "scaleX": scaleX, //Cambiar al valor default
-        "scaleY": ScaleY,
+        "scaleY": scaleY,
         "top": top,//100,
         "left": left//50
     })
@@ -160,9 +161,9 @@ function AddRectangle(canvas, left, top, width, height, angle, scaleX, scaleY) {
     return rect;
 }
 
-function AddText(left, top, width, height, angle, scaleX, scaleY) {
-    id_counter += 1
-
+function renderText(canvas, left, top, width, height, angle, scaleX, scaleY) {
+    console.log("TEXT")
+    console.log(`id_counter: ${id_counter}`)
     canvas.add(new fabric.IText('Tap and Type', {
         id: id_counter,
         fontFamily: 'arial black',
@@ -189,10 +190,11 @@ function AddText(left, top, width, height, angle, scaleX, scaleY) {
     })
 }
 
-function AddVector(left, top, width, height, angle, scaleX, scaleY, force) {
-    id_counter += 1
-
+function renderVector(canvas, left, top, width, height, angle, scaleX, scaleY, force) {
+    console.log("VECTOR")
+    console.log(`id_counter: ${id_counter}`)
     fabric.Image.fromURL('https://cdn-icons-png.flaticon.com/512/664/664866.png', (img) => {
+
         img.set({
             id: id_counter,
             scaleX: scaleX,//1/4,
@@ -332,44 +334,36 @@ function canvasGridSetUp(canvas){
 
 function attachButtonsEvents(canvas){
     $('#addBar').on('click', function(){
-        AddRectangle(canvas, 90, 60, 180, 30, 0, 0, 0);
+        id_counter += 1
+        renderRectangle(canvas, 90, 60, 180, 30, 0, 1, 1);
     });
 
     $('#addText').on('click', function(){
-        AddText(50, 100, 0, 0, 0, 0, 0);
+        id_counter += 1
+        renderText(canvas,50, 100, 0, 0, 0, 1, 1);
     });
 
     $('#open-vector-modal').on('click', function(){
+        id_counter += 1
         $('#exampleModal').modal("toggle")
     });
 
     $('#addApoyoFijo').on('click', function(){
         id_counter += 1
-        renderApoyoFijo(canvas,id_counter, 1/4, 1/4, 100, 50, 0)
+        renderApoyoFijo(canvas, 1/4, 1/4, 100, 50, 0)
     });
 
     $('#addApoyoDes').on('click', function(){
         id_counter += 1
-        renderApoyoDes(canvas,id_counter, 1/4, 1/4, 100, 50, 0)
+        renderApoyoDes(canvas, 1/4, 1/4, 100, 50, 0)
     });
 
     $('#addEmpotramiento').on('click', function(){
         id_counter += 1
-        renderEmpotramiento(canvas, id_counter, 1/4, 1/4, 100, 50, 0)
+        renderEmpotramiento(canvas, 1/4, 1/4, 100, 50, 0)
     });
 
     $('#guardar').on('click', function(){
-        json = JSON.stringify(canvas);
-        console.log(json)
-        $.ajax({
-            type: "POST",
-            url: $('#save-task').val(),
-            dataType: 'text',
-            data: {canvas_stringify: json, id: $('#task-id').val()},
-            success: function (data) {
-                console.log(data);
-            }
-        });
         data_to_send.push(objects)
         data_to_send.push({task_id: $('#task-id').val()})
         $.ajax({
@@ -378,7 +372,6 @@ function attachButtonsEvents(canvas){
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data_to_send),
             success: function (data) {
-                console.log(data);
             }
         });
 
@@ -433,18 +426,30 @@ function setUpDeleteIcon(){
 
 //Object Modified Event
 var onObjectModified = function(e) {
-    console.log(e.target.id)
+/*
+    console.log(`scaleX: ${e.target.get("scaleX")}`)
+*/
 
-    alert(this.getActiveObject().id);
+    alert(e.target.id);
     objects.some(function(object){
         if (e.target.id === object["id"]){
-            console.log(`Before: ${object["angle"]}`)
+            /*console.log(`Before: ${object["angle"]}`)
+            console.log(`Before: ${object["scaleX"]}`)
+            console.log(`Before: ${object["scaleY"]}`)
+            console.log(`Before: ${object["top"]}`)
+            console.log(`Before: ${object["left"]}`)*/
             object["angle"] = e.target.angle
             object["scaleX"] = e.target.scaleX
             object["scaleY"] = e.target.scaleY
             object["top"] = e.target.top
             object["left"] = e.target.left
+            /*console.log(`after: ${object["id"]}`)
+            console.log(`after: ${object["scaleX"]}`)
             console.log(`after: ${object["angle"]}`)
+            console.log(`after: ${object["scaleX"]}`)
+            console.log(`after: ${object["scaleY"]}`)
+            console.log(`after: ${object["top"]}`)
+            console.log(`after: ${object["left"]}`)*/
         }
     })
 
@@ -463,37 +468,49 @@ function common_events(){
     //Load canvas from server
     $.ajax({
         type: "POST",
-        url: $('#load-canvas').val(),
-        dataType: 'json',
-        data: {id: $('#task-id').val()},
-        success: function (data) {
-            console.log(`data: ${data}`)
-            /*canvas.loadFromJSON(data, function(){
-                canvas.renderAll();
-                canvas.forEachObject(function(object){
-                    if (object.type === "line"){
-                        object.selectable = false
-                    }
-                });
-            });*/
-        }
-    });
-
-    //Load canvas from server
-    $.ajax({
-        type: "POST",
         url: "/load2",
         dataType: 'json',
         data: {id: $('#task-id').val()},
         success: function (data) {
-            canvas.loadFromJSON(data, function(){
-                canvas.renderAll();
-                canvas.forEachObject(function(object){
-                    if (object.type === "line"){
-                        object.selectable = false
-                    }
-                });
-            });
+            data.some(function (val, index) {
+
+                if (val.object_type === "bar"){
+                    id_counter += 1
+                    console.log("BAR")
+                    console.log(`id_counter: ${id_counter}`)
+                    renderRectangle(canvas,val.left,val.top,val.width, val.height, val.angle, val.scaleX, val.scaleY)
+                }
+                else if (val.object_type === "vector"){
+                    id_counter += 1
+                    console.log("BAR")
+                    console.log(`id_counter: ${id_counter}`)
+                    renderVector(canvas,val.left,val.top,val.width, val.height, val.angle, val.scaleX, val.scaleY, val.force)
+                }
+                else if (val.object_type === "text"){
+                    id_counter += 1
+                    console.log("text")
+                    console.log(`id_counter: ${id_counter}`)
+                    renderText(canvas,val.left,val.top,val.width, val.height, val.angle, val.scaleX, val.scaleY)
+                }
+                else if (val.object_type === "apoyo-deslizante"){
+                    id_counter += 1
+                    console.log("deslizante")
+                    console.log(`id_counter: ${id_counter}`)
+                    renderApoyoDes(canvas, val.scaleX, val.scaleY, val.top, val.left, val.angle)
+                }
+                else if (val.object_type === "apoyo-fijo"){
+                    id_counter += 1
+                    console.log("fijo")
+                    console.log(`id_counter: ${id_counter}`)
+                    renderApoyoFijo(canvas, val.scaleX, val.scaleY, val.top, val.left, val.angle)
+                }
+                else if (val.object_type === "empotramiento"){
+                    id_counter += 1
+                    console.log("empotramiento")
+                    console.log(`id_counter: ${id_counter}`)
+                    renderEmpotramiento(canvas, val.scaleX, val.scaleY, val.top, val.left, val.angle)
+                }
+            })
         }
     });
 
@@ -526,8 +543,6 @@ function common_events(){
     $('#create-vector').on("click", function () {
         var v_force = $('#vector-force').val();
         var v_angle = $('#vector-angle').val();
-
-        id_counter += 1
 
         fabric.Image.fromURL('https://cdn-icons-png.flaticon.com/512/664/664866.png', (img) => {
             img.set({

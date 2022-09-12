@@ -14,6 +14,9 @@ class TaskController < ApplicationController
     task_id = params[:_json][1]["task_id"]
     puts "task_id: #{task_id}"
     @task = Task.find(task_id)
+
+    @task.task_objects.destroy_all
+
     puts "Task: #{@task}"
     objects.each do |obj|
       @new_obj = TaskObject.create(task: @task,
