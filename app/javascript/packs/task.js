@@ -259,6 +259,8 @@ function solver(canvas) {
     var apoyos_fijos = [];
     var solve_target;
 
+
+    var bar_width
     var sum_fx;
     var sum_fy;
     canvas.forEachObject(function(object){
@@ -279,18 +281,30 @@ function solver(canvas) {
         }
     })
 
-    var bar_width = Math.round(bar.width*bar.scaleX/30)
-
-    var result = descomponerFuerzas(vectors, apoyos_fijos)
-    sum_fx = result[0]
-    sum_fy = result[1]
-
-    console.log(`sum_fx: ${sum_fx}`)
-    console.log(`sum_fy: ${sum_fy}`)
+    var fx_container = $('#fx-container');
+    var fy_container = $('#fy-container');
 
 
-    console.log(`Bar: type: ${bar.object_type} top: ${bar.top} left: ${bar.left}`)
-    console.log(`bar_width: ${bar_width}`)
+    if (bar != null){
+        bar_width  = Math.round(bar.width*bar.scaleX/30)
+
+        var result = descomponerFuerzas(vectors, apoyos_fijos)
+        sum_fx = result[0]
+        sum_fy = result[1]
+
+        console.log(`sum_fx: ${sum_fx}`)
+        console.log(`sum_fy: ${sum_fy}`)
+
+
+        fx_container.html("ΣFx = " + sum_fx);
+        fy_container.html("ΣFy = " + sum_fy);
+
+        console.log(`Bar: type: ${bar.object_type} top: ${bar.top} left: ${bar.left}`)
+        console.log(`bar_width: ${bar_width}`)
+    }
+
+
+
 
 }
 
@@ -446,7 +460,7 @@ function attachButtonsEvents(canvas){
             type: "POST",
             url: $('#save-task').val(),
             dataType: 'text',
-            data: {canvas_stringify: json, id: $('#task-id').val()},
+            data: {canvas_stringify: json, id: $('#task-id').val(), task_name: $('#task-name').val(), instructions: $('#instructions').val()},
             success: function (data) {
                 console.log(data);
             }
@@ -656,6 +670,7 @@ function common_events(){
                     }
                 })
             })
+            solver(canvas)
         }
     })
 
@@ -673,8 +688,14 @@ function common_events(){
 
     canvas.on('object:modified', function(e){
         solver(canvas)
-        console.log(e.target.get('force'));
+        console.log("ON Modified!");
     })
+
+    canvas.on('object:removed', function(e){
+        solver(canvas)
+        console.log("ON removed!");
+    })
+
 
     canvas.on('mouse:down', function(event) {
         var pointer = canvas.getPointer(event.e);
@@ -685,6 +706,11 @@ function common_events(){
 
 
 
-
+    $.ajax({
+        url: '/get_task_info',
+        type: 'POST',
+        dataType: 'script',
+        data: {id: $('#task-id').val()}
+    });
 
 }

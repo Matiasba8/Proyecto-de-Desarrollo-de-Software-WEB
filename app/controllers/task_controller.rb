@@ -6,7 +6,7 @@ class TaskController < ApplicationController
 
   def save_task
     @task = Task.where(id: params[:id])[0]
-    @task.update(canvas_stringify: params[:canvas_stringify])
+    @task.update(canvas_stringify: params[:canvas_stringify], instructions: params[:instructions], name: params[:task_name])
   end
 
   def save2
@@ -51,6 +51,10 @@ class TaskController < ApplicationController
   def index
     $is_home_page = false
     @tasks = Task.all
+  end
+
+  def get_task_info
+    @task = Task.where(id: params[:id])[0]
   end
 
   def load_canvas

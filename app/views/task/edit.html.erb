@@ -2,33 +2,69 @@
 <input id="load-canvas" name="load-canvas" type="hidden" value="<%= load_canvas_url%>">
 <input id="save-task" name="save-task" type="hidden" value="<%= save_task_url %>">
 <div class="controls">
-  <p>
-    <button id="addBar">Agregar Barra</button>
-    <label for="fname">Nombre Ejercicio</label>
-    <input type="text" id="fname" name="fname" value="Ingrese el nombre del ejercicio">
+
+  <div class="d-flex">
+    <p class="d-flex me-3 exercise-name-container">
+
+      <label for="fname">Nombre Ejercicio</label>
+      <input type="text" id="task-name" name="fname" value="<%= @task.name.present? ? @task.name : "Ingrese el nombre del ejercicio" %>">
+    </p>
+    <p>
+      <button id="addBar" class="h-100">Agregar Barra</button>
+    <p>
+    <p>
+      <button id="open-vector-modal" class="h-100" type="button" data-toggle="modal" data-target="#exampleModal">Agregar Flecha</button>
+    </p>
+    <p>
+      <button id="addText" class="h-100">Agregar Texto</button>
+    </p>
+    <p>
+      <button id="addApoyoFijo" class="h-100">Agregar Apoyo Fijo</button>
+    </p>
+    </p>
+    <p>
+      <button id="addApoyoDes" class="h-100">Agregar Apoyo Deslizante</button>
+    </p>
+    <p>
+      <button id="addCircle" class="h-100">Agregar punto de calculo</button>
+    </p>
+    <p>
+      <button id="addMomentum" class="h-100">Agregar momento</button>
+    </p>
+    <p>
+      <button id="addEmpotramiento" class="h-100">Agregar Empotramiento</button>
+    </p>
+    <p>
+      <button id="guardar" class="h-100">Guardar</button>
+    </p>
+
+  </div>
+
+
+</div>
+
+<div class="info-container">
+
+  <p class="instructions-container mb-3">
+    <div class="instruction-header"> Instrucciones: </div>
+    <div class="instruction-body">
+      <textarea id="instructions" name="w3review" rows="4" cols="50">
+        <%= @task.instructions.present? ? @task.instructions : "lorem ipsum" %>
+        <%= puts "Instruction Body!: #{@task.instructions}" %>
+      </textarea>
+    </div>
   </p>
-  <p>
-    <button id="open-vector-modal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar Flecha</button>
-  </p>
-  <p>
-    <button id="addText">Agregar Texto</button>
-  </p>
-  <p>
-    <button id="addApoyoFijo">Agregar Apoyo Fijo</button>
-  </p>
-  <p>
-    <button id="addApoyoDes">Agregar Apoyo Deslizante</button>
-  </p>
-  <p>
-    <button id="addCircle">Agregar punto de calculo</button>
-  </p>
-  <p>
-    <button id="addMomentum">Agregar momento</button>
-  </p>
-  <p>
-    <button id="addEmpotramiento">Agregar Empotramiento</button>
-    <button id="guardar">Guardar</button>
-  </p>
+
+  <div class="results">
+    <div class="result-header mb-3"> Ecuaciones de Equilibrio:</div>
+    <p id="fx-container">
+
+    </p>
+    <p id="fy-container">
+
+    </p>
+  </div>
+
 </div>
 <canvas id="canvas"></canvas>
 
