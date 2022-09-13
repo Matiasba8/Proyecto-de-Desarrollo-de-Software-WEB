@@ -1,12 +1,15 @@
 // -***- Listas -***-
 
 
+var abcdario = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
+
 const fabric = require("fabric").fabric;
 
 // -***- Render Objects -***-
 
 function renderRectangle(canvas, left, top, width, height, angle, scaleX, scaleY) {
     var rect = new fabric.Rect({
+        object_type: "bar",
         left: left,//90,
         top: top,//60,
         fill: '#999999',
@@ -28,6 +31,7 @@ function renderRectangle(canvas, left, top, width, height, angle, scaleX, scaleY
 function renderText(canvas, left, top, width, height, angle, scaleX, scaleY) {
     canvas.add(new fabric.IText('Tap and Type', {
         fontFamily: 'arial black',
+        object_type: "text",
         left: left,//50,
         top: top,//100 ,
         width: width,
@@ -38,10 +42,38 @@ function renderText(canvas, left, top, width, height, angle, scaleX, scaleY) {
     }));
 }
 
+function renderCircle(canvas, left, top, width, height, angle, scaleX, scaleY){
+    var circle = new fabric.Circle({
+        top: 30,
+        left: 30,
+        object_type: "circle",
+        radius: 15,
+        fill: "red",
+        stroke: "red",
+        strokeWidth: 3
+    });
+
+    circle.setControlsVisibility({
+        mt: false,
+        mb: false,
+        ml: false,
+        mr: false,
+        bl: false,
+        br: false,
+        tl: false,
+        tr: false,
+        mtr: false,
+    });
+
+    canvas.add(circle)
+}
+
 function renderVector(canvas, left, top, width, height, angle, scaleX, scaleY, force) {
     fabric.Image.fromURL('https://cdn-icons-png.flaticon.com/512/664/664866.png', (img) => {
         img.set({
+            object_type: "vector",
             force: force,
+
             scaleX: scaleX,//1/4,
             scaleY: scaleY,//1/4,
             top: top,//100,
@@ -59,29 +91,57 @@ function renderApoyoFijo(canvas, scaleX, scaleY, top, left, angle ){
 
     fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
         img.set({
+            object_type: "apoyo-fijo",
             scaleX: scaleX,
             scaleY: scaleY,
             top: top,
             left: left,
             angle: angle,
         });
-        img.scaleToWidth(30);
-        img.scaleToHeight(30);
+        img.scaleToWidth(60);
+        img.scaleToHeight(60);
+
+        img.setControlsVisibility({
+            mt: false,
+            mb: false,
+            ml: false,
+            mr: false,
+            bl: false,
+            br: false,
+            tl: false,
+            tr: false,
+            mtr: false,
+        });
         canvas.add(img)
+
     });
 }
 
 function renderApoyoDes(canvas, scaleX, scaleY, top, left, angle ){
     fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
         img.set({
+            object_type: "apoyo-deslizante",
             scaleX: scaleX,
             scaleY: scaleY,
             top: top,
             left: left,
             angle: angle,
         });
-        img.scaleToWidth(30);
-        img.scaleToHeight(30);
+        img.scaleToWidth(60);
+        img.scaleToHeight(60);
+
+        img.setControlsVisibility({
+            mt: false,
+            mb: false,
+            ml: false,
+            mr: false,
+            bl: false,
+            br: false,
+            tl: false,
+            tr: false,
+            mtr: false,
+        });
+
         canvas.add(img)
     });
 }
@@ -89,18 +149,153 @@ function renderApoyoDes(canvas, scaleX, scaleY, top, left, angle ){
 function renderEmpotramiento(canvas, scaleX, scaleY, top, left, angle ){
     fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
         img.set({
+            object_type: "empotramiento",
             scaleX: scaleX,
             scaleY: scaleY,
             top: top,
             left: left,
             angle: angle,
         });
+
+        img.setControlsVisibility({
+            mt: false,
+            mb: false,
+            ml: false,
+            mr: false,
+            bl: false,
+            br: false,
+            tl: false,
+            tr: false,
+            mtr: false,
+        });
+
+        img.scaleToWidth(60);
+        img.scaleToHeight(60);
+        canvas.add(img)
+    });
+}
+
+function renderMomentum(canvas, scaleX, scaleY, top, left, angle, m_force) {
+    fabric.Image.fromURL('https://cdn-icons-png.flaticon.com/512/7235/7235860.png', (img) => {
+        img.set({
+            force: m_force,
+            object_type: "momentum",
+            scaleX: scaleX,
+            scaleY: scaleY,
+            top: top,
+            left: left,
+            angle: angle,
+        });
+
+        img.setControlsVisibility({
+            mt: false,
+            mb: false,
+            ml: false,
+            mr: false,
+            bl: false,
+            br: false,
+            tl: false,
+            tr: false,
+            mtr: false,
+        });
+
         img.scaleToWidth(30);
         img.scaleToHeight(30);
         canvas.add(img)
     });
 }
+
 // -***-----------------------------------***-----
+
+// -***---------Ecuación de equilibrio---------***-----
+
+function descomponerFuerzas(vectors, apoyos) {
+    var sum_fx = ""
+    var sum_fy = ""
+
+    vectors.some(function(val, index){
+        console.log(`Force: ${val.force} * cos(${val.angle}`)
+
+        if (vectors.length === index + 1){
+            if (apoyos.length >= 1){
+                sum_fx = sum_fx + `${val.force} * cos(${val.angle}) + `
+                sum_fy = sum_fy + `${val.force} * sin(${val.angle}) + `
+            }
+            else{
+                sum_fx = sum_fx + `${val.force} * cos(${val.angle})`
+                sum_fy = sum_fy + `${val.force} * sin(${val.angle})`
+            }
+
+        }else{
+            sum_fx = sum_fx + `${val.force} * cos(${val.angle}) + `
+            sum_fy = sum_fy + `${val.force} * sin(${val.angle}) + `
+        }
+
+    })
+
+    apoyos.some(function(val, index){
+
+        if (apoyos.length === index + 1){
+            if (val.object_type == "apoyo-fijo"){
+                console.log("Apoyo fijo")
+                sum_fx = sum_fx + abcdario[index] + "x"
+                sum_fy = sum_fy + abcdario[index] + "y"
+            }
+        }
+        else{
+            if (val.object_type == "apoyo-fijo"){
+                sum_fx = sum_fx + abcdario[index] + "x + "
+                sum_fy = sum_fy + abcdario[index] + "y + "
+            }
+        }
+    })
+
+    return [sum_fx, sum_fy]
+}
+
+function solver(canvas) {
+    var bar;
+    var vectors = [];
+    var apoyos_fijos = [];
+    var solve_target;
+
+    var sum_fx;
+    var sum_fy;
+    canvas.forEachObject(function(object){
+        if (object.type != "line"){
+            if (object.object_type == "bar"){
+                bar = object
+            }
+            else if (object.object_type == "fuerza"){
+                vectors.push(object)
+            }
+            else if (object.object_type == "circle"){
+                solve_target = object
+            }
+            else if (object.object_type == "apoyo-fijo"){
+                apoyos_fijos.push(object)
+            }
+
+        }
+    })
+
+    var bar_width = Math.round(bar.width*bar.scaleX/30)
+
+    var result = descomponerFuerzas(vectors, apoyos_fijos)
+    sum_fx = result[0]
+    sum_fy = result[1]
+
+    console.log(`sum_fx: ${sum_fx}`)
+    console.log(`sum_fy: ${sum_fy}`)
+
+
+    console.log(`Bar: type: ${bar.object_type} top: ${bar.top} left: ${bar.left}`)
+    console.log(`bar_width: ${bar_width}`)
+
+}
+
+
+
 
 function canvasGridSetUp(canvas){
     var grid = 30;
@@ -211,6 +406,11 @@ function canvasGridSetUp(canvas){
 }
 
 function attachButtonsEvents(canvas){
+
+    $('#addCircle').on('click', function(){
+        renderCircle(canvas,0, 0, 90, 90, 0, 0, 0);
+    });
+
     $('#addBar').on('click', function(){
         renderRectangle(canvas, 90, 60, 180, 30, 0, 1, 1);
     });
@@ -235,8 +435,12 @@ function attachButtonsEvents(canvas){
         renderEmpotramiento(canvas, 1/4, 1/4, 100, 50, 0)
     });
 
+    $('#addMomentum').on('click', function () {
+        $('#exampleModalMomentum').modal("toggle")
+    });
+
     $('#guardar').on('click', function(){
-        var json = JSON.stringify(canvas.toJSON(['force']));
+        var json = JSON.stringify(canvas.toJSON(['force', 'object_type']));
         console.log(json);
         $.ajax({
             type: "POST",
@@ -249,15 +453,48 @@ function attachButtonsEvents(canvas){
         });
     });
 
+    $('#create-momentum').on('click', function(){
+       var m_force = $('#momentum-force').val();
+
+       renderMomentum(canvas, 1/4, 1/4, 100, 50, 0, m_force);
+    });
+
     // Al ingresar crear en el modal del vector se crea la imagen con los atributos correspondientes
     $('#create-vector').on("click", function () {
         var v_force = $('#vector-force').val();
         var v_angle = $('#vector-angle').val();
 
-        fabric.Image.fromURL('https://cdn-icons-png.flaticon.com/512/664/664866.png', (img) => {
+
+        var circle = new fabric.Circle({
+            top: 30,
+            left: 30,
+            force: v_force,
+            angle: v_angle,
+            object_type: "fuerza",
+            radius: 5,
+            fill: "brown",
+            stroke: "brown",
+            strokeWidth: 2
+        });
+
+        circle.setControlsVisibility({
+            mt: false,
+            mb: false,
+            ml: false,
+            mr: false,
+            bl: false,
+            br: false,
+            tl: false,
+            tr: false,
+            mtr: false,
+        });
+
+        canvas.add(circle)
+
+        /*fabric.Image.fromURL('https://cdn-icons-png.flaticon.com/512/664/664866.png', (img) => {
             img.set({
-                scaleX: 1/4,
-                scaleY: 1/4,
+                scaleX: 0.1171875,
+                scaleY: 0.1171875,
                 top: 100,
                 left: 50,
 
@@ -267,7 +504,7 @@ function attachButtonsEvents(canvas){
             canvas.add(img)
 
             console.log(`Img_id: ${img.id}`)
-        });
+        });*/
         //Close modal
         $('#exampleModal').modal("toggle");
     })
@@ -330,6 +567,7 @@ function common_events(){
 
     console.log("Common events")
 
+    //Load canvas
     $.ajax({
         type: "POST",
         url: $('#load-canvas').val(),
@@ -342,42 +580,85 @@ function common_events(){
                     if (object.type == "line"){
                         object.selectable = false
                     }
+                    else if (object.object_type == "apoyo-fijo"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }
+                    else if (object.object_type == "apoyo-deslizante"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    } else if (object.object_type == "empotramiento"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }else if (object.object_type == "fuerza"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }else if (object.object_type == "momentum"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }else if (object.object_type == "circle"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }
                 })
             })
         }
     })
-    //Load canvas from server
-    /* $.ajax({
-        type: "POST",
-        url: "/load2",
-        dataType: 'json',
-        data: {id: $('#task-id').val()},
-        success: function (data) {
-            data.some(function (val, index) {
 
-                if (val.object_type === "bar"){
-                    renderRectangle(canvas,val.left,val.top,val.width, val.height, val.angle, val.scaleX, val.scaleY)
-                }
-                else if (val.object_type === "vector"){
-                    renderVector(canvas,val.left,val.top,val.width, val.height, val.angle, val.scaleX, val.scaleY, val.force)
-                }
-                else if (val.object_type === "text"){
-                    renderText(canvas,val.left,val.top,val.width, val.height, val.angle, val.scaleX, val.scaleY)
-                }
-                else if (val.object_type === "apoyo-deslizante"){
-                    renderApoyoDes(canvas, val.scaleX, val.scaleY, val.top, val.left, val.angle)
-                }
-                else if (val.object_type === "apoyo-fijo"){
-                    renderApoyoFijo(canvas, val.scaleX, val.scaleY, val.top, val.left, val.angle)
-                }
-                else if (val.object_type === "empotramiento"){
-                    renderEmpotramiento(canvas, val.scaleX, val.scaleY, val.top, val.left, val.angle)
-                }
-            })
-        }
-    }); */
-
-    console.log("It executes!");
 
     var canvas = this.__canvas = new fabric.Canvas('canvas');
     var json;
@@ -391,6 +672,19 @@ function common_events(){
     attachButtonsEvents(canvas)
 
     canvas.on('object:modified', function(e){
+        solver(canvas)
         console.log(e.target.get('force'));
     })
+
+    canvas.on('mouse:down', function(event) {
+        var pointer = canvas.getPointer(event.e);
+        var posX = Math.round(pointer.x/30)*30;
+        var posY = Math.round(pointer.y/30)*30;
+        console.log(posX+", "+posY);    // Log to console
+    });
+
+
+
+
+
 }

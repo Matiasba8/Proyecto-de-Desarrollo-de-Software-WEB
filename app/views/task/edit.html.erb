@@ -20,6 +20,12 @@
     <button id="addApoyoDes">Agregar Apoyo Deslizante</button>
   </p>
   <p>
+    <button id="addCircle">Agregar punto de calculo</button>
+  </p>
+  <p>
+    <button id="addMomentum">Agregar momento</button>
+  </p>
+  <p>
     <button id="addEmpotramiento">Agregar Empotramiento</button>
     <button id="guardar">Guardar</button>
   </p>
@@ -50,6 +56,32 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary close-vector-modal" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" id="create-vector">Crear</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Momentum -->
+<div class="modal fade" id="exampleModalMomentum" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos del momentum</h5>
+        <button type="button" class="close close-vector-modal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <label for="momentum-force"> Magnitud del momentum</label>
+          <input type="text" id="momentum-force">
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-momentum-modal" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="create-momentum">Crear</button>
       </div>
     </div>
   </div>
