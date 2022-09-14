@@ -31,6 +31,7 @@ function renderRectangle(canvas, left, top, width, height, angle, scaleX, scaleY
 function renderText(canvas, left, top, width, height, angle, scaleX, scaleY) {
     canvas.add(new fabric.IText('Tap and Type', {
         fontFamily: 'arial black',
+        fontSize: 12,
         object_type: "text",
         left: left,//50,
         top: top,//100 ,
@@ -234,10 +235,16 @@ function descomponerFuerzas(vectors, apoyos) {
     })
 
     apoyos.some(function(val, index){
-
         if (apoyos.length === index + 1){
             if (val.object_type == "apoyo-fijo"){
                 console.log("Apoyo fijo")
+                sum_fx = sum_fx + abcdario[index] + "x"
+                sum_fy = sum_fy + abcdario[index] + "y"
+            }
+            else if (val.object_type == "apoyo-deslizante"){
+                sum_fy = sum_fy + abcdario[index] + "y"
+            }
+            else if (val.object_type == "empotramiento"){
                 sum_fx = sum_fx + abcdario[index] + "x"
                 sum_fy = sum_fy + abcdario[index] + "y"
             }
@@ -247,7 +254,22 @@ function descomponerFuerzas(vectors, apoyos) {
                 sum_fx = sum_fx + abcdario[index] + "x + "
                 sum_fy = sum_fy + abcdario[index] + "y + "
             }
+            else if (val.object_type == "apoyo-deslizante"){
+                sum_fy = sum_fy + abcdario[index] + "y + "
+            }
+            else if (val.object_type == "empotramiento"){
+                sum_fx = sum_fx + abcdario[index] + "x + "
+                sum_fy = sum_fy + abcdario[index] + "y + "
+            }
         }
+
+        canvas.add(new fabric.IText(abcdario[index], {
+            fontFamily: 'arial black',
+            fontSize: 12,
+            object_type: "text",
+            left: val.left + 30,
+            top: val.top + 30
+        }));
     })
 
     return [sum_fx, sum_fy]
@@ -256,7 +278,7 @@ function descomponerFuerzas(vectors, apoyos) {
 function solver(canvas) {
     var bar;
     var vectors = [];
-    var apoyos_fijos = [];
+    var apoyos = [];
     var solve_target;
 
 
@@ -275,7 +297,13 @@ function solver(canvas) {
                 solve_target = object
             }
             else if (object.object_type == "apoyo-fijo"){
-                apoyos_fijos.push(object)
+                apoyos.push(object)
+            }
+            else if (object.object_type == "apoyo-deslizante"){
+                apoyos.push(object)
+            }
+            else if (object.object_type == "empotramiento"){
+                apoyos.push(object)
             }
 
         }
