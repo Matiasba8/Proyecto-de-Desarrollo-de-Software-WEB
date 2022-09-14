@@ -38,6 +38,16 @@
       <button id="guardar" class="h-100">Guardar</button>
     </p>
 
+    <%= form_with url: create_image_url, local: true do |form| %>
+      <%= form.file_field :image, multiple: false %>
+      <%= form.hidden_field :id, value: @task.id %>
+      <%= form.submit %>
+    <%end %>
+
+    <p>
+      <button id="addImage" class="h-100">Agregar Imagen</button>
+    </p>
+
   </div>
 
 
@@ -61,10 +71,14 @@
 
     </p>
     <p id="fy-container">
-
     </p>
   </div>
 
+</div>
+<div class="image_container">
+  <%if @task.image.present?  %>
+    <%= image_tag @task.image, style: "width: 200px" %>
+  <%end %>
 </div>
 <canvas id="canvas"></canvas>
 

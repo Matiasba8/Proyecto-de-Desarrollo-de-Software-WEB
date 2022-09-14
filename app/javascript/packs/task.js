@@ -210,7 +210,7 @@ function renderMomentum(canvas, scaleX, scaleY, top, left, angle, m_force) {
 
 // -***---------Ecuación de equilibrio---------***-----
 
-function descomponerFuerzas(vectors, apoyos) {
+function descomponerFuerzas(canvas, vectors, apoyos) {
     var sum_fx = ""
     var sum_fy = ""
 
@@ -262,14 +262,6 @@ function descomponerFuerzas(vectors, apoyos) {
                 sum_fy = sum_fy + abcdario[index] + "y + "
             }
         }
-
-        canvas.add(new fabric.IText(abcdario[index], {
-            fontFamily: 'arial black',
-            fontSize: 12,
-            object_type: "text",
-            left: val.left + 30,
-            top: val.top + 30
-        }));
     })
 
     return [sum_fx, sum_fy]
@@ -316,7 +308,7 @@ function solver(canvas) {
     if (bar != null){
         bar_width  = Math.round(bar.width*bar.scaleX/30)
 
-        var result = descomponerFuerzas(vectors, apoyos_fijos)
+        var result = descomponerFuerzas(canvas, vectors, apoyos)
         sum_fx = result[0]
         sum_fy = result[1]
 

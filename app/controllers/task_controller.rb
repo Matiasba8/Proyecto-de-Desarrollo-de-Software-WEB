@@ -67,5 +67,10 @@ class TaskController < ApplicationController
     end
   end
 
+  def create_image
+    @task = Task.find(params[:id])
+    @task.update(image: params[:image])
+  end
+
 
 end
