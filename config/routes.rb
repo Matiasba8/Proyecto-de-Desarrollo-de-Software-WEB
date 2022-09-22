@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   post "load2", to: "task#load2"
   post "get_task_info", to: "task#get_task_info"
   post "create_image", to: "task#create_image"
+
+  post "delete_task", to: "task#delete_task"
 end

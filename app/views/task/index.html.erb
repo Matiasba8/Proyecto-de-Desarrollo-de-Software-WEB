@@ -5,11 +5,12 @@
     <th scope="col">Nombre Tarea</th>
     <th scope="col">Profesor</th>
     <th scope="col">Dificultad</th>
+    <th scope="col"></th>
   </tr>
   </thead>
   <tbody>
     <% @tasks.each do |t| %>
-      <tr>
+      <tr class="tr-task-id-<%=t.id %>">
         <td>
           <a href="/task/<%=t.id %>/edit"><%=t.id %></a>
         </td>
@@ -21,6 +22,12 @@
         </td>
         <td>
           <%= t.category %>
+        </td>
+        <td>
+          <%= form_with url: delete_task_url , remote: true do |form| %>
+            <%= form.hidden_field :id, value: t.id %>
+            <%= form.submit "Borrar" %>
+          <% end %>
         </td>
       </tr>
     <% end %>

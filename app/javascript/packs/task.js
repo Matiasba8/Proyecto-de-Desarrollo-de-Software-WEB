@@ -90,7 +90,7 @@ function renderVector(canvas, left, top, width, height, angle, scaleX, scaleY, f
 
 function renderApoyoFijo(canvas, scaleX, scaleY, top, left, angle ){
 
-    fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
+    fabric.Image.fromURL('https://svgshare.com/i/mt6.svg', (img) => {
         img.set({
             object_type: "apoyo-fijo",
             scaleX: scaleX,
@@ -119,7 +119,7 @@ function renderApoyoFijo(canvas, scaleX, scaleY, top, left, angle ){
 }
 
 function renderApoyoDes(canvas, scaleX, scaleY, top, left, angle ){
-    fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
+    fabric.Image.fromURL('https://svgshare.com/i/msx.svg', (img) => {
         img.set({
             object_type: "apoyo-deslizante",
             scaleX: scaleX,
@@ -148,7 +148,7 @@ function renderApoyoDes(canvas, scaleX, scaleY, top, left, angle ){
 }
 
 function renderEmpotramiento(canvas, scaleX, scaleY, top, left, angle ){
-    fabric.Image.fromURL('https://www.pngmart.com/files/4/Triangle-PNG-Clipart.png', (img) => {
+    fabric.Image.fromURL('https://svgshare.com/i/mtd.svg', (img) => {
         img.set({
             object_type: "empotramiento",
             scaleX: scaleX,
@@ -547,6 +547,8 @@ function attachButtonsEvents(canvas){
     $('.close-vector-modal').on("click", function(){
         $('#exampleModal').modal("toggle");
     });
+
+
 }
 
 function setUpDeleteIcon(){
@@ -598,6 +600,7 @@ function setUpDeleteIcon(){
 $( document ).on('turbolinks:load', common_events)
 
 function common_events(){
+
 
     console.log("Common events")
 

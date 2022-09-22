@@ -72,5 +72,11 @@ class TaskController < ApplicationController
     @task.update(image: params[:image])
   end
 
+  def delete_task
+    @task = Task.find(params[:id])
+    @task_id_to_destroy = @task.id
+    @task.destroy
+  end
+
 
 end

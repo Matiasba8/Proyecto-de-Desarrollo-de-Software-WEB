@@ -57,11 +57,13 @@
 
   <p class="instructions-container mb-3">
     <div class="instruction-header"> Instrucciones: </div>
-    <div class="instruction-body">
+    <div class="instruction-body d-flex">
       <textarea id="instructions" name="w3review" rows="4" cols="50">
         <%= @task.instructions.present? ? @task.instructions : "lorem ipsum" %>
-        <%= puts "Instruction Body!: #{@task.instructions}" %>
       </textarea>
+      <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+        * Cada cuadricula del plano representa 1 metro
+      </div>
     </div>
   </p>
 
