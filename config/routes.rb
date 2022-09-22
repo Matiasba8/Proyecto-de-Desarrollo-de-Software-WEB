@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'task/new'
-  get 'user/login'
+  get 'user/login', to: "user#login_page"
   get 'user/index'
   root to: "home#home"
 
@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   post "create_image", to: "task#create_image"
 
   post "delete_task", to: "task#delete_task"
+  post "user/login", to: "user#login"
+  post "sign_out", to: "user#sign_out"
 end

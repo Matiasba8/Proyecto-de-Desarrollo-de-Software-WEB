@@ -23,18 +23,36 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto">
 
-        <li class="nav-item">
-          <%= link_to "Crear cuenta", user_new_url, class:"nav-link" %>
+        <%if session[:user_role] == "Profesor"%>
+          <li class="nav-item">
+            <%= link_to "Nueva Tarea", task_new_path, class:"nav-link", id: "new-task-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Index de Tarea", task_index_path, class:"nav-link" %>
+        <%elsif session[:user_role] == "Estudiante" %>
+          <li class="nav-item">
+            <%= link_to "Siguiente Tarea", root_path, class:"nav-link" %>
+          </li>
+        <%end %>
+
+
+
         </li>
-        <li class="nav-item">
-          <%= link_to "Iniciar sesión", root_url, class:"nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Nueva Tarea", task_new_path, class:"nav-link", id: "new-task-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Index de Tarea", task_index_path, class:"nav-link" %>
-        </li>
+        <% if session[:user_id] %>
+          <li class="nav-item">
+            <%= link_to "Cerrar Sesión", sign_out_url, class:"nav-link", method: :post %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Perfil", root_path, class:"nav-link" %>
+          </li>
+        <%else %>
+          <li class="nav-item">
+            <%= link_to "Crear cuenta", user_new_url, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Iniciar sesión", user_login_path, class:"nav-link" %>
+          </li>
+        <%end %>
       </ul>
     </div>
   </div>
