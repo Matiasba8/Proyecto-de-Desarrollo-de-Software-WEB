@@ -6,8 +6,12 @@
       <%= form.text_field :email, class:"form-control", type:"email", id: "exampleInputEmail1"%>
       <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
+
     <div class="mb-3">
-      <%= form.label :name, "Professor name" %>
+      <%= form.select :role, [['Estudiante', "Estudiante"], ["Profesor", "Profesor"]], class: "form-select" %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :name, "name" %>
       <%= form.text_field :name, class:"form-control"%>
     </div>
     <div class="mb-3">
