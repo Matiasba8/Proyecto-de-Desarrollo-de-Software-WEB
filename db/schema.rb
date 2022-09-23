@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_22_174954) do
+ActiveRecord::Schema.define(version: 2022_09_22_234828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "achievements", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.string "topic"
+    t.integer "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["student_id"], name: "index_achievements_on_student_id"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -79,9 +88,11 @@ ActiveRecord::Schema.define(version: 2022_09_22_174954) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "instructions"
+    t.string "start_stage"
     t.index ["professor_id"], name: "index_tasks_on_professor_id"
   end
 
+  add_foreign_key "achievements", "students"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "task_objects", "tasks"
   add_foreign_key "tasks", "professors"

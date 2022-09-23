@@ -35,6 +35,10 @@ class UserController < ApplicationController
   end
 
 
+  def profile
+
+  end
+
 
   def new
     if params[:role] == "Profesor"
@@ -44,6 +48,10 @@ class UserController < ApplicationController
       redirect_to root_path
     elsif params[:role] == "Estudiante"
       @new_student = Student.create(email: params[:email], name: params[:name], phone_number: params[:phone_number], password: params[:password])
+      bar_master = Achievement.create(student: @new_student, topic: "Maestro de la barra", amount: 0)
+      forces_master = Achievement.create(student: @new_student, topic: "Maestro de las fuerzas", amount: 0)
+      momentum_master = Achievement.create(student: @new_student, topic: "Maestro del momentum", amount: 0)
+      maestro_vinvulos_externos = Achievement.create(student: @new_student, topic: "Maestro de vinculos externos", amount: 0)
       session[:user_id] = @new_student.id
       session[:user_role] = "Estudiante"
       redirect_to root_path

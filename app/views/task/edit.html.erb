@@ -56,15 +56,31 @@
 <div class="info-container">
 
   <p class="instructions-container mb-3">
-    <div class="instruction-header"> Instrucciones: </div>
-    <div class="instruction-body d-flex">
+  <div class="instruction-header"> Instrucciones: </div>
+  <div class="instruction-body d-flex">
       <textarea id="instructions" name="w3review" rows="4" cols="50">
         <%= @task.instructions.present? ? @task.instructions : "lorem ipsum" %>
       </textarea>
-      <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
-        * Cada cuadricula del plano representa 1 metro
-      </div>
+    <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+      * Cada cuadricula del plano representa 1 metro
     </div>
+    <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+      <label class="me-3">Etapa Inicial</label>
+      <input type="text" id="start-stage" placeholder="<%= @task.start_stage %>">
+    </div>
+    <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+      <div class="d-flex copy-task-cointainer">
+        <select class="form-select" aria-label="Default select example" id="task-copy-select">
+          <option selected>Copiar Tarea</option>
+          <% @tasks.each do |task| %>
+            <option value="<%= task.id %>"><%= task.name %></option>
+          <% end %>
+        </select>
+        <button id="copy-task-btn">Test</button>
+      </div>
+
+    </div>
+  </div>
   </p>
 
   <div class="results">

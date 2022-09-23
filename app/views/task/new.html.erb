@@ -1,4 +1,4 @@
-<input id="task-id" name="task-id" type="hidden" value="<%=@new_task.id%>">
+<input id="task-id" name="task-id" type="hidden" value="<%=@task.id%>">
 <input id="load-canvas" name="load-canvas" type="hidden" value="<%= load_canvas_url%>">
 <input id="save-task" name="save-task" type="hidden" value="<%= save_task_url %>">
 <div class="controls">
@@ -7,7 +7,7 @@
     <p class="d-flex me-3 exercise-name-container">
 
       <label for="fname">Nombre Ejercicio</label>
-      <input type="text" id="task-name" name="fname" value="<%= @new_task.name.present? ? @new_task.name : "Ingrese el nombre del ejercicio" %>">
+      <input type="text" id="task-name" name="fname" value="<%= @task.name.present? ? @task.name : "Ingrese el nombre del ejercicio" %>">
     </p>
     <p>
       <button id="addBar" class="h-100">Agregar Barra</button>
@@ -40,7 +40,7 @@
 
     <%= form_with url: create_image_url, local: true do |form| %>
       <%= form.file_field :image, multiple: false %>
-      <%= form.hidden_field :id, value: @new_task.id %>
+      <%= form.hidden_field :id, value: @task.id %>
       <%= form.submit %>
     <%end %>
 
@@ -57,16 +57,36 @@
 
   <p class="instructions-container mb-3">
   <div class="instruction-header"> Instrucciones: </div>
-  <div class="instruction-body">
+  <div class="instruction-body d-flex">
       <textarea id="instructions" name="w3review" rows="4" cols="50">
-        <%= @new_task.instructions.present? ? @new_task.instructions : "lorem ipsum" %>
+        <%= @task.instructions.present? ? @task.instructions : "lorem ipsum" %>
       </textarea>
+    <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+      * Cada cuadricula del plano representa 1 metro
+    </div>
+    <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+      <label class="me-3">Etapa Inicial</label>
+      <input type="text" id="start-stage" placeholder="<%= @task.start_stage %>">
+    </div>
+    <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+      <div class="d-flex copy-task-cointainer">
+        <select class="form-select" aria-label="Default select example" id="task-copy-select">
+          <option selected>Copiar Tarea</option>
+          <% @tasks.each do |task| %>
+            <option value="<%= task.id %>"><%= task.name %></option>
+          <% end %>
+        </select>
+        <button id="copy-task-btn">Test</button>
+      </div>
+
+    </div>
   </div>
   </p>
 
   <div class="results">
     <div class="result-header mb-3"> Ecuaciones de Equilibrio:</div>
     <p id="fx-container">
+
     </p>
     <p id="fy-container">
     </p>
@@ -74,8 +94,8 @@
 
 </div>
 <div class="image_container">
-  <%if @new_task.image.present?  %>
-    <%= image_tag @new_task.image, style: "width: 200px" %>
+  <%if @task.image.present?  %>
+    <%= image_tag @task.image, style: "width: 200px" %>
   <%end %>
 </div>
 <canvas id="canvas"></canvas>

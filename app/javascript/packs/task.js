@@ -7,6 +7,101 @@ const fabric = require("fabric").fabric;
 
 // -***- Render Objects -***-
 
+function loadCanvas(canvas) {
+    //Load canvas
+    $.ajax({
+        type: "POST",
+        url: $('#load-canvas').val(),
+        dataType: 'json',
+        data: {id: $('#task-copy-select').val()},
+        success: function(data){
+            canvas.loadFromJSON(data, function(){
+                canvas.renderAll();
+                canvas.forEachObject(function(object){
+                    if (object.type == "line"){
+                        object.selectable = false
+                    }
+                    else if (object.object_type == "apoyo-fijo"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }
+                    else if (object.object_type == "apoyo-deslizante"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    } else if (object.object_type == "empotramiento"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }else if (object.object_type == "fuerza"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }else if (object.object_type == "momentum"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }else if (object.object_type == "circle"){
+                        object.setControlsVisibility({
+                            mt: false,
+                            mb: false,
+                            ml: false,
+                            mr: false,
+                            bl: false,
+                            br: false,
+                            tl: false,
+                            tr: false,
+                            mtr: false,
+                        });
+                    }
+                })
+            })
+            solver(canvas)
+        }
+    })
+}
+
 function renderRectangle(canvas, left, top, width, height, angle, scaleX, scaleY) {
     var rect = new fabric.Rect({
         object_type: "bar",
@@ -170,8 +265,8 @@ function renderEmpotramiento(canvas, scaleX, scaleY, top, left, angle ){
             mtr: false,
         });
 
-        img.scaleToWidth(60);
-        img.scaleToHeight(60);
+       /* img.scaleToWidth(60);
+        img.scaleToHeight(60);*/
         canvas.add(img)
     });
 }
@@ -441,6 +536,10 @@ function canvasGridSetUp(canvas){
 
 function attachButtonsEvents(canvas){
 
+    $('#copy-task-btn').on('click', function (){
+        loadCanvas(canvas);
+    });
+
     $('#addCircle').on('click', function(){
         renderCircle(canvas,0, 0, 90, 90, 0, 0, 0);
     });
@@ -466,7 +565,7 @@ function attachButtonsEvents(canvas){
     });
 
     $('#addEmpotramiento').on('click', function(){
-        renderEmpotramiento(canvas, 1/4, 1/4, 100, 50, 0)
+        renderEmpotramiento(canvas, 1/4, 1/4, 100, 50, 90)
     });
 
     $('#addMomentum').on('click', function () {
@@ -480,7 +579,7 @@ function attachButtonsEvents(canvas){
             type: "POST",
             url: $('#save-task').val(),
             dataType: 'text',
-            data: {canvas_stringify: json, id: $('#task-id').val(), task_name: $('#task-name').val(), instructions: $('#instructions').val()},
+            data: {canvas_stringify: json, id: $('#task-id').val(), task_name: $('#task-name').val(), instructions: $('#instructions').val(), start_stage: $('#start-stage').val()},
             success: function (data) {
                 console.log(data);
             }

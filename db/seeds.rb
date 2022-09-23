@@ -5,6 +5,21 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+=begin
 
 professor = Professor.create(email: "mibustos2@miuandes.cl", name: "Matías")
 task = Task.create(professor_id: professor.id, name: "First Task", category: "")
+=end
+
+
+=begin
+student = Student.create(name: "testStudent", email: "test@gmail.com", phone_number: "test", password: "123")
+achievement = Achievement.create(topic: "Barras", amount: 100, student: student)
+=end
+
+Student.all.each do |student|
+  bar_master = Achievement.create(student: student, topic: "Maestro de la barra", amount: 0)
+  forces_master = Achievement.create(student: student, topic: "Maestro de las fuerzas", amount: 0)
+  momentum_master = Achievement.create(student: student, topic: "Maestro del momentum", amount: 0)
+  maestro_vinvulos_externos = Achievement.create(student: student, topic: "Maestro de vinculos externos", amount: 0)
+end

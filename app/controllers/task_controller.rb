@@ -1,12 +1,13 @@
 class TaskController < ApplicationController
   def new
-    @new_task = Task.create(professor_id: 1, name: "test", category: "Easy")
+    @task = Task.create(professor_id: 1, name: "test", category: "Easy")
+    @tasks = Task.all
     $is_home_page = false
   end
 
   def save_task
     @task = Task.where(id: params[:id])[0]
-    @task.update(canvas_stringify: params[:canvas_stringify], instructions: params[:instructions], name: params[:task_name])
+    @task.update(canvas_stringify: params[:canvas_stringify], instructions: params[:instructions], name: params[:task_name], start_stage: params[:start_stage])
   end
 
   def save2
@@ -46,6 +47,7 @@ class TaskController < ApplicationController
 
   def edit
     @task = Task.where(id: params[:id])[0]
+    @tasks = Task.all
   end
 
   def index
@@ -76,6 +78,10 @@ class TaskController < ApplicationController
     @task = Task.find(params[:id])
     @task_id_to_destroy = @task.id
     @task.destroy
+  end
+
+  def next_student_task
+
   end
 
 

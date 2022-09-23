@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "user/new", to: "user#new_user_page"
   get "task/:id/edit", to: "task#edit"
   get "task/index", to: "task#index"
+  get "next_task", to: "task#next_student_task"
+  get "user/profile", to: "user#profile"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   post "new_user", to: "user#new"
