@@ -195,7 +195,7 @@ function renderApoyoFijo(canvas, scaleX, scaleY, top, left, angle ){
             angle: angle,
         });
         img.scaleToWidth(60);
-        img.scaleToHeight(60);
+        //img.scaleToHeight(60);
 
         img.setControlsVisibility({
             mt: false,
@@ -224,7 +224,7 @@ function renderApoyoDes(canvas, scaleX, scaleY, top, left, angle ){
             angle: angle,
         });
         img.scaleToWidth(60);
-        img.scaleToHeight(60);
+        //img.scaleToHeight(60);
 
         img.setControlsVisibility({
             mt: false,
@@ -305,56 +305,65 @@ function renderMomentum(canvas, scaleX, scaleY, top, left, angle, m_force) {
 
 // -***---------Ecuación de equilibrio---------***-----
 
-function descomponerFuerzas(canvas, vectors, apoyos) {
+function descomponerFuerzas(canvas, vectors, apoyos, bar) {
     var sum_fx = ""
     var sum_fy = ""
 
     vectors.some(function(val, index){
         console.log(`Force: ${val.force} * cos(${val.angle}`)
 
-        if (vectors.length === index + 1){
-            if (apoyos.length >= 1){
+        if ((val.top == (bar.top) || val.top == (bar.top + 30)) && (val.left >= (bar.left)) && ((val.left) <= (bar.left + (bar.width*bar.scaleX)))){
+            if (vectors.length === index + 1){
+                if (apoyos.length >= 1){
+                    sum_fx = sum_fx + `${val.force} * cos(${val.angle}) + `
+                    sum_fy = sum_fy + `${val.force} * sin(${val.angle}) + `
+                }
+                else{
+                    sum_fx = sum_fx + `${val.force} * cos(${val.angle})`
+                    sum_fy = sum_fy + `${val.force} * sin(${val.angle})`
+                }
+    
+            }else{
                 sum_fx = sum_fx + `${val.force} * cos(${val.angle}) + `
                 sum_fy = sum_fy + `${val.force} * sin(${val.angle}) + `
             }
-            else{
-                sum_fx = sum_fx + `${val.force} * cos(${val.angle})`
-                sum_fy = sum_fy + `${val.force} * sin(${val.angle})`
-            }
-
-        }else{
-            sum_fx = sum_fx + `${val.force} * cos(${val.angle}) + `
-            sum_fy = sum_fy + `${val.force} * sin(${val.angle}) + `
         }
-
     })
 
     apoyos.some(function(val, index){
-        if (apoyos.length === index + 1){
-            if (val.object_type == "apoyo-fijo"){
-                console.log("Apoyo fijo")
-                sum_fx = sum_fx + abcdario[index] + "x"
-                sum_fy = sum_fy + abcdario[index] + "y"
+        if (val.top == (bar.top+30) && (val.left >= (bar.left-30)) && ((val.left + 30) <= (bar.left + (bar.width*bar.scaleX))) && val.object_type != "empotramiento"){
+            if (apoyos.length === index + 1){
+                if (val.object_type == "apoyo-fijo"){
+                    console.log("Apoyo fijo")
+                    sum_fx = sum_fx + abcdario[index] + "x"
+                    sum_fy = sum_fy + abcdario[index] + "y"
+                }
+                else if (val.object_type == "apoyo-deslizante"){
+                    sum_fy = sum_fy + abcdario[index] + "y"
+                }
             }
-            else if (val.object_type == "apoyo-deslizante"){
-                sum_fy = sum_fy + abcdario[index] + "y"
-            }
-            else if (val.object_type == "empotramiento"){
-                sum_fx = sum_fx + abcdario[index] + "x"
-                sum_fy = sum_fy + abcdario[index] + "y"
+            else{
+                if (val.object_type == "apoyo-fijo"){
+                    sum_fx = sum_fx + abcdario[index] + "x + "
+                    sum_fy = sum_fy + abcdario[index] + "y + "
+                }
+                else if (val.object_type == "apoyo-deslizante"){
+                    sum_fy = sum_fy + abcdario[index] + "y + "
+                }
             }
         }
         else{
-            if (val.object_type == "apoyo-fijo"){
-                sum_fx = sum_fx + abcdario[index] + "x + "
-                sum_fy = sum_fy + abcdario[index] + "y + "
-            }
-            else if (val.object_type == "apoyo-deslizante"){
-                sum_fy = sum_fy + abcdario[index] + "y + "
-            }
-            else if (val.object_type == "empotramiento"){
-                sum_fx = sum_fx + abcdario[index] + "x + "
-                sum_fy = sum_fy + abcdario[index] + "y + "
+            if (val.object_type == "empotramiento"){
+                if (val.top == (bar.top) && (val.left == (bar.left))){
+                    if (apoyos.length === index + 1){
+                        sum_fx = sum_fx + abcdario[index] + "x"
+                        sum_fy = sum_fy + abcdario[index] + "y"
+                    }
+                    else{
+                        sum_fx = sum_fx + abcdario[index] + "x + "
+                        sum_fy = sum_fy + abcdario[index] + "y + "
+                    }
+                }
             }
         }
     })
@@ -403,7 +412,7 @@ function solver(canvas) {
     if (bar != null){
         bar_width  = Math.round(bar.width*bar.scaleX/30)
 
-        var result = descomponerFuerzas(canvas, vectors, apoyos)
+        var result = descomponerFuerzas(canvas, vectors, apoyos, bar)
         sum_fx = result[0]
         sum_fy = result[1]
 
@@ -557,15 +566,15 @@ function attachButtonsEvents(canvas){
     });
 
     $('#addApoyoFijo').on('click', function(){
-        renderApoyoFijo(canvas, 1/4, 1/4, 100, 50, 0)
+        renderApoyoFijo(canvas, 1/4, 1/4, 100, 50, 0);
     });
 
     $('#addApoyoDes').on('click', function(){
-        renderApoyoDes(canvas, 1/4, 1/4, 100, 50, 0)
+        renderApoyoDes(canvas, 1/4, 1/4, 130, 90, 0);
     });
 
     $('#addEmpotramiento').on('click', function(){
-        renderEmpotramiento(canvas, 1/4, 1/4, 100, 50, 90)
+        renderEmpotramiento(canvas, 1/4, 1/4, 100, 50, 90);
     });
 
     $('#addMomentum').on('click', function () {
