@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-64">
     <div class="main-body">
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -22,7 +22,7 @@
                       <h6 class="mb-0">Full Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        Nombre
+                        <%= @student.name %>
                     </div>
                   </div>
                   <hr>
@@ -31,7 +31,7 @@
                       <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      fip@jukmuh.al
+                      <%= @student.email %>
                     </div>
                   </div>
                   <hr>
@@ -40,7 +40,7 @@
                       <h6 class="mb-0">Phone</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      (239) 816-9029
+                      <%= @student.phone_number %>
                     </div>
                   </div>
                   <hr>
@@ -57,7 +57,7 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Maestro de la barra</i></h6>
-                      <small>INSERTAR VALOR</small>
+                      <small><%=@maestro_barra.amount %></small>
                     </div>
                   </div>
                 </div>
@@ -65,7 +65,7 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Maestro de las fuerzas</i></h6>
-                      <small>INSERTAR VALOR</small>
+                      <small><%=@maestro_de_la_fuerza.amount %></small>
                     </div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Maestro del momentum</i></h6>
-                      <small>INSERTAR VALOR</small>
+                      <small><%=@maestro_del_momentum.amount %></small>
                     </div>
                   </div>
                 </div>
@@ -83,7 +83,7 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Maestro de vinculos externos</i></h6>
-                      <small>INSERTAR VALOR</small>
+                      <small><%=@maestro_de_vinculos_externos.amount %></small>
                     </div>
                   </div>
                 </div>

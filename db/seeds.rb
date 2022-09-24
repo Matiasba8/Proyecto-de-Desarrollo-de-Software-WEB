@@ -11,7 +11,6 @@ task = Task.create(professor_id: professor.id, name: "First Task", category: "")
 
 
 student = Student.create(name: "testStudent", email: "test@gmail.com", phone_number: "test", password: "123")
-achievement = Achievement.create(topic: "Barras", amount: 100, student: student)
 
 Student.all.each do |student|
   bar_master = Achievement.create(student: student, topic: "Maestro de la barra", amount: 0)

@@ -36,6 +36,18 @@ class UserController < ApplicationController
 
 
   def profile
+    @student = nil
+    @professor = nil
+    if session[:user_role] == "Estudiante"
+      @student = Student.find(session[:user_id])
+      @maestro_barra = @student.achievements.where(topic: "Maestro de la barra")[0]
+      @maestro_de_la_fuerza = @student.achievements.where(topic: "Maestro de las fuerzas")[0]
+      @maestro_del_momentum = @student.achievements.where(topic: "Maestro del momentum")[0]
+      @maestro_de_vinculos_externos= @student.achievements.where(topic: "Maestro de vinculos externos")[0]
+
+    elsif session[:user_role] == "Profesor"
+      @professor = Professor.find(session[:user_id])
+    end
   end
 
 
