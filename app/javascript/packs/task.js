@@ -432,6 +432,33 @@ function solver(canvas) {
 
 }
 
+function get_difficulty(canvas){
+    // X: CANTIDAD DE PASOS
+    // Y: BARRAS
+    // Z: CANTIDAD DE FUERZAS
+    // (X + 1)**(Y + Z)
+
+    var difficulty = 0;
+    var x = $('#start-stage').val().length >0 ? 4 - parseInt($('#start-stage').val(), 10) : 4 - parseInt($('#start-stage').attr('placeholder'), 10); // pesca el valor del input, si es que es nulo, toma el del placeholder
+    var y = 0;
+    var z = 0;
+
+    canvas.forEachObject(function(object){
+        if (object.object_type == "bar"){
+            y += 1
+        }
+        else if (object.object_type == "fuerza"){
+            z += 1
+        }
+    });
+
+    console.log(`x: ${4 - x}`)
+    console.log(`y: ${y}`)
+    console.log(`z: ${z}`)
+
+    console.log(`difficulty: ${(x)*(y + z)}`)
+    $('#difficulty-container').html(x*(y + z))
+}
 
 
 
@@ -819,6 +846,7 @@ function common_events(){
 
     canvas.on('object:modified', function(e){
         solver(canvas)
+        get_difficulty(canvas);
         console.log("ON Modified!");
     })
 
