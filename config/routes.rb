@@ -23,4 +23,6 @@ Rails.application.routes.draw do
   post "delete_task", to: "task#delete_task"
   post "user/login", to: "user#login"
   post "sign_out", to: "user#sign_out"
+
+  get "task/next_student_task", to: "task#next_student_task"
 end

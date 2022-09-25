@@ -1,1 +1,53 @@
-<div>Next student Task erb</div>
+<input id="task-id" name="task-id" type="hidden" value="<%=@task.id%>">
+<input id="load-canvas" name="load-canvas" type="hidden" value="<%= load_canvas_url%>">
+<input id="save-task" name="save-task" type="hidden" value="<%= save_task_url %>">
+<div class="controls">
+
+  <div class="d-flex">
+    <p class="d-flex me-3 exercise-name-container">
+      <label for="fname">Nombre Ejercicio</label>
+      <label><%=@task.name %></label>
+    </p>
+  </div>
+</div>
+
+<div class="info-container">
+
+  <p class="instructions-container mb-3">
+  <div class="instruction-header"> Instrucciones: </div>
+  <div class="instruction-body d-flex">
+      <textarea id="instructions" name="w3review" rows="4" cols="50">
+        <%= @task.instructions.present? ? @task.instructions : "lorem ipsum" %>
+      </textarea>
+    <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+      * Cada cuadricula del plano representa 1 metro
+    </div>
+    <div class="ms-3 align-items-center d-flex w-100 justify-content-center d-none">
+      <label class="me-3">Etapa Inicial</label>
+      <input type="text" id="start-stage" placeholder="<%= @task.start_stage %>">
+    </div>
+  </div>
+  </p>
+  <div class="pb-3">
+    <label class="pe-3"> Ingrese las resputas aqui:</label>
+    <input type="text" placeholder="Sumatoria en X">
+    <input type="text" placeholder="Sumatoria en Y" class="me-3">
+    <button class="btn btn-primary" id="submit-answers">Entregar respuestas</button>
+  </div>
+
+  <div class="results d-none">
+    <div class="result-header mb-3"> Ecuaciones de Equilibrio:</div>
+    <p id="fx-container">
+
+    </p>
+    <p id="fy-container">
+    </p>
+  </div>
+</div>
+<div class="image_container">
+  <%if @task.image.present?  %>
+    <%= image_tag @task.image, style: "width: 200px" %>
+  <%end %>
+</div>
+<canvas id="canvas"></canvas>
+

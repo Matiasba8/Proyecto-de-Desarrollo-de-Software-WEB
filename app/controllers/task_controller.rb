@@ -81,8 +81,10 @@ class TaskController < ApplicationController
   end
 
   def next_student_task
+    @tasks = Task.all
+
+    @task = @tasks[rand(@tasks.length)]
 
   end
-
 
 end
