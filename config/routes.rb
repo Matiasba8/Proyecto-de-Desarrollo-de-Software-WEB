@@ -25,4 +25,6 @@ Rails.application.routes.draw do
   post "sign_out", to: "user#sign_out"
 
   get "task/next_student_task", to: "task#next_student_task"
+
+  post "upload_results", to: "task#upload_results"
 end

@@ -1,6 +1,8 @@
 <input id="task-id" name="task-id" type="hidden" value="<%=@task.id%>">
 <input id="load-canvas" name="load-canvas" type="hidden" value="<%= load_canvas_url%>">
 <input id="save-task" name="save-task" type="hidden" value="<%= save_task_url %>">
+<input id="rol" name="rol" type="hidden" value="<%= session[:user_role] %>">
+
 <div class="controls">
 
   <div class="d-flex">
@@ -16,11 +18,20 @@
   <p class="instructions-container mb-3">
   <div class="instruction-header"> Instrucciones: </div>
   <div class="instruction-body d-flex">
-      <textarea id="instructions" name="w3review" rows="4" cols="50">
+      <textarea id="instructions" name="w3review" rows="4" cols="50" readonly>
         <%= @task.instructions.present? ? @task.instructions : "lorem ipsum" %>
       </textarea>
     <div class="ms-3 align-items-center d-flex w-100 justify-content-center">
+      <p class="me-3">
       * Cada cuadricula del plano representa 1 metro
+      </p>
+      <p class="ps-3" >
+        Las fuerzas se encuentran representadas por puntos y acompañadas por la información necesaria.<br>
+        Al escribir tu respuesta, sigue las siguientes instrucciones:<br>
+        - Cada fuerza debe estar separada por un signo "+".<br>
+        - Fuerzas externas se acompañan por su letra y eje. Ej "Ax"<br>
+        - Las fuerzas de carga se deben ingresar del tipo: (Módulo de fuerza)*cos/sin(Ángulo). Ej: "45*cos(30)"<br>
+      </p>
     </div>
     <div class="ms-3 align-items-center d-flex w-100 justify-content-center d-none">
       <label class="me-3">Etapa Inicial</label>

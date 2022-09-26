@@ -87,4 +87,15 @@ class TaskController < ApplicationController
 
   end
 
+  def upload_results
+    @user = Student.find(session[:user_id])
+    @bar_master = @user.achievements.where(topic: 'Maestro de la barra')[0]
+    @maestro_de_la_fuerza = @user.achievements.where(topic: "Maestro de las fuerzas")[0]
+    @maestro_de_vinculos_externos= @user.achievements.where(topic: "Maestro de vinculos externos")[0]
+
+    @bar_master.update(amount: @bar_master.amount + Integer(params[:barras]))
+    @maestro_de_la_fuerza.update(amount: @maestro_de_la_fuerza.amount + Integer(params[:fuerzas]))
+    @maestro_de_vinculos_externos.update(amount: @maestro_de_vinculos_externos.amount + Integer(params[:vinculos]))
+  end
+
 end

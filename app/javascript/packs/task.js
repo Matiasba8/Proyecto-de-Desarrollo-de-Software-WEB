@@ -2,6 +2,7 @@
 
 
 var abcdario = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
+var wrongTries = 0;
 
 const fabric = require("fabric").fabric;
 
@@ -634,21 +635,49 @@ function attachButtonsEvents(canvas){
 
         if (wrongAnswers <= 0 && solArrayX.length <= 0 && solArrayY.length <= 0){
             console.log("CORRECT ANSWER");
-            $('#mBarra').html("+5");
-            $('#mFuerza').html("+5");
-            $('#mMomentum').html("+5");
-            $('#mVinculos').html("+5");
+
+            var barras = 0;
+            var vinculos = 0;
+            var fuerzas = 0;
+
+            canvas.forEachObject(function(object){
+                if (object.object_type == "bar"){
+                    barras = barras + 1;
+                }
+                else if (object.object_type == "apoyo-fijo" || object.object_type == "apoyo-deslizante" || object.object_type == "empotramiento"){
+                    vinculos = vinculos + 1;
+                }
+                else if (object.object_type == "fuerza"){
+                    fuerzas = fuerzas + 1;
+                }
+            });
+            
+            var barrasStr = "+ " + barras;
+            var vinculosStr = "+ " + vinculos;
+            var fuerzasStr = "+ " + fuerzas;
+
+            $.ajax({
+                type: "POST",
+                url: "/upload_results",
+                data: {barras: barras, vinculos: vinculos, fuerzas: fuerzas},
+            })
+
+            $('#mBarra').html(barrasStr);
+            $('#mFuerza').html(fuerzasStr);
+            $('#mMomentum').html("+ 0");
+            $('#mVinculos').html(vinculosStr);
             $('#resultModalLabel').html("Resultado: CORRECTO!");
             $('#modalResult').modal("toggle");
         }
         else{
             console.log("INCORRECT ANSWER");
-            $('#mBarra').html("+0");
-            $('#mFuerza').html("+0");
-            $('#mMomentum').html("+0");
-            $('#mVinculos').html("+0");
+            $('#mBarra').html("+ 0");
+            $('#mFuerza').html("+ 0");
+            $('#mMomentum').html("+ 0");
+            $('#mVinculos').html("+ 0");
             $('#resultModalLabel').html("Resultado: INCORRECTO!");
             $('#modalResult').modal("toggle");
+            wrongTries = wrongTries + 1;
         }
     });
 
@@ -831,6 +860,9 @@ function common_events(){
             canvas.loadFromJSON(data, function(){
                 canvas.renderAll();
                 canvas.forEachObject(function(object){
+                    if ($('#rol').val() == 'Estudiante'){
+                        object.selectable = false;
+                    }
                     if (object.type == "line"){
                         object.selectable = false
                     }
