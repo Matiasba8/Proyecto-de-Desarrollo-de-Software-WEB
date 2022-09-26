@@ -29,6 +29,8 @@ class UserController < ApplicationController
   end
 
   def index
+    @profesores = Professor.all
+    @estudiantes = Student.all
   end
 
   def new_user_page
@@ -39,7 +41,7 @@ class UserController < ApplicationController
     @student = nil
     @professor = nil
     if session[:user_role] == "Estudiante"
-      @student = Student.find(session[:user_id])
+      @student = Student.find(params[:id])
       @maestro_barra = @student.achievements.where(topic: "Maestro de la barra")[0]
       @maestro_de_la_fuerza = @student.achievements.where(topic: "Maestro de las fuerzas")[0]
       @maestro_del_momentum = @student.achievements.where(topic: "Maestro del momentum")[0]

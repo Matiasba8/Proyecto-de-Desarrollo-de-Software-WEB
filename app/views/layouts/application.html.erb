@@ -40,13 +40,17 @@
         </li>
         <% if session[:user_id] %>
           <li class="nav-item">
-            <%= link_to "Cerrar Sesión", sign_out_url, class:"nav-link", method: :post %>
+            <a href="/user/index" class="nav-link">Usuarios</a>
           </li>
           <% if session[:user_role] == "Estudiante"%>
             <li class="nav-item">
-              <%= link_to "Perfil", user_profile_url, class:"nav-link" %>
+              <a href="/user/<%=session[:user_id]%>/profile" class="nav-link">Perfil</a>
             </li>
           <%end %>
+          <li class="nav-item">
+            <%= link_to "Cerrar Sesión", sign_out_url, class:"nav-link", method: :post %>
+          </li>
+
         <%else %>
           <li class="nav-item">
             <%= link_to "Crear cuenta", user_new_url, class:"nav-link" %>
