@@ -30,8 +30,8 @@
   </p>
   <div class="pb-3">
     <label class="pe-3"> Ingrese las resputas aqui:</label>
-    <input type="text" placeholder="Sumatoria en X">
-    <input type="text" placeholder="Sumatoria en Y" class="me-3">
+    <input id="task-answerX" type="text" placeholder="Sumatoria en X">
+    <input id="task-answerY" type="text" placeholder="Sumatoria en Y" class="me-3">
     <button class="btn btn-primary" id="submit-answers">Entregar respuestas</button>
   </div>
 
@@ -51,3 +51,35 @@
 </div>
 <canvas id="canvas"></canvas>
 
+<!-- Modal -->
+<div class="modal fade" id="modalResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resultModalLabel">Resultados Del Ejercicio: </h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          <label>Maestro de la barra</label>
+          <label id="mBarra"></label>
+        </p>
+        <p>
+          <label>Maestro de las fuerzas</label>
+          <label id="mFuerza"></label>
+        </p>
+        <p>
+          <label>Maestro de momentum</label>
+          <label id="mMomentum"></label>
+        </p>
+        <p>
+          <label>Maestro de vínculos externos</label>
+          <label id="mVinculos"></label>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary closeResultModal" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary"><%= link_to "Finalizar", root_url, class:"nav-link" %></button>
+      </div>
+    </div>
+  </div>
+</div>

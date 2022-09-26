@@ -315,17 +315,23 @@ function descomponerFuerzas(canvas, vectors, apoyos, bar) {
         if ((val.top == (bar.top) || val.top == (bar.top + 30)) && (val.left >= (bar.left)) && ((val.left) <= (bar.left + (bar.width*bar.scaleX)))){
             if (vectors.length === index + 1){
                 if (apoyos.length >= 1){
-                    sum_fx = sum_fx + `${val.force} * cos(${val.angle}) + `
-                    sum_fy = sum_fy + `${val.force} * sin(${val.angle}) + `
+                    if (apoyos[0].object_type == "apoyo-deslizante"){
+                        sum_fx = sum_fx + `${val.force}*cos(${val.angle})`
+                        sum_fy = sum_fy + `${val.force}*sin(${val.angle}) + `
+                    }
+                    else{
+                        sum_fx = sum_fx + `${val.force}*cos(${val.angle}) + `
+                        sum_fy = sum_fy + `${val.force}*sin(${val.angle}) + `
+                    }
                 }
                 else{
-                    sum_fx = sum_fx + `${val.force} * cos(${val.angle})`
-                    sum_fy = sum_fy + `${val.force} * sin(${val.angle})`
+                    sum_fx = sum_fx + `${val.force}*cos(${val.angle})`
+                    sum_fy = sum_fy + `${val.force}*sin(${val.angle})`
                 }
     
             }else{
-                sum_fx = sum_fx + `${val.force} * cos(${val.angle}) + `
-                sum_fy = sum_fy + `${val.force} * sin(${val.angle}) + `
+                sum_fx = sum_fx + `${val.force}*cos(${val.angle}) + `
+                sum_fy = sum_fy + `${val.force}*sin(${val.angle}) + `
             }
         }
     })
@@ -344,8 +350,14 @@ function descomponerFuerzas(canvas, vectors, apoyos, bar) {
             }
             else{
                 if (val.object_type == "apoyo-fijo"){
-                    sum_fx = sum_fx + abcdario[index] + "x + "
-                    sum_fy = sum_fy + abcdario[index] + "y + "
+                    if (apoyos[index+1].object_type == "apoyo-deslizante"){
+                        sum_fx = sum_fx + abcdario[index] + "x"
+                        sum_fy = sum_fy + abcdario[index] + "y + "
+                    }
+                    else{
+                        sum_fx = sum_fx + abcdario[index] + "x + "
+                        sum_fy = sum_fy + abcdario[index] + "y + "
+                    }
                 }
                 else if (val.object_type == "apoyo-deslizante"){
                     sum_fy = sum_fy + abcdario[index] + "y + "
@@ -426,10 +438,6 @@ function solver(canvas) {
         console.log(`Bar: type: ${bar.object_type} top: ${bar.top} left: ${bar.left}`)
         console.log(`bar_width: ${bar_width}`)
     }
-
-
-
-
 }
 
 function get_difficulty(canvas){
@@ -571,6 +579,78 @@ function canvasGridSetUp(canvas){
 }
 
 function attachButtonsEvents(canvas){
+    $('#submit-answers').on('click', function (){
+        solver(canvas);
+        var realAnswerX = document.getElementById('fx-container').textContent;
+        var realAnswerY = document.getElementById('fy-container').textContent;
+        var answerPutX = document.getElementById('task-answerX').value;
+        var answerPutY = document.getElementById('task-answerY').value;
+
+        var solArray0X = realAnswerX.split("=")
+        var solArrayX = solArray0X[1].split("+")
+        solArrayX.some(function(val, index){
+            var item = val.replace(/\s+/g, '');
+            solArrayX[index] = item;
+        });
+        
+        var ansArrayX = answerPutX.split("+")
+        ansArrayX.some(function(val, index){
+            var item = val.replace(/\s+/g, '');
+            ansArrayX[index] = item;
+        });
+
+        var solArray0Y = realAnswerY.split("=")
+        var solArrayY = solArray0Y[1].split("+")
+        solArrayY.some(function(val, index){
+            var item = val.replace(/\s+/g, '');
+            solArrayY[index] = item;
+        });
+        
+        var ansArrayY = answerPutY.split("+")
+        ansArrayY.some(function(val, index){
+            var item = val.replace(/\s+/g, '');
+            ansArrayY[index] = item;
+        });
+        
+        var wrongAnswers = 0;
+        ansArrayX.some(function(val, index){
+            var result = solArrayX.indexOf(val)
+            if (result > -1){
+                solArrayX.splice(result, 1);
+            }
+            else{
+                wrongAnswers = wrongAnswers + 1;
+            }
+        })
+        ansArrayY.some(function(val, index){
+            var result = solArrayY.indexOf(val)
+            if (result > -1){
+                solArrayY.splice(result, 1);
+            }
+            else{
+                wrongAnswers = wrongAnswers + 1;
+            }
+        })
+
+        if (wrongAnswers <= 0 && solArrayX.length <= 0 && solArrayY.length <= 0){
+            console.log("CORRECT ANSWER");
+            $('#mBarra').html("+5");
+            $('#mFuerza').html("+5");
+            $('#mMomentum').html("+5");
+            $('#mVinculos').html("+5");
+            $('#resultModalLabel').html("Resultado: CORRECTO!");
+            $('#modalResult').modal("toggle");
+        }
+        else{
+            console.log("INCORRECT ANSWER");
+            $('#mBarra').html("+0");
+            $('#mFuerza').html("+0");
+            $('#mMomentum').html("+0");
+            $('#mVinculos').html("+0");
+            $('#resultModalLabel').html("Resultado: INCORRECTO!");
+            $('#modalResult').modal("toggle");
+        }
+    });
 
     $('#copy-task-btn').on('click', function (){
         loadCanvas(canvas);
@@ -682,8 +762,10 @@ function attachButtonsEvents(canvas){
     $('.close-vector-modal').on("click", function(){
         $('#exampleModal').modal("toggle");
     });
-
-
+    
+    $('.closeResultModal').on("click", function(){
+        $('#modalResult').modal("toggle");
+    });
 }
 
 function setUpDeleteIcon(){
